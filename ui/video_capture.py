@@ -1,7 +1,9 @@
+import sys
+
 import cv2
-from PySide6.QtCore import QThread, Signal, QTimer
-from PySide6.QtGui import QImage, QPixmap, Qt
-from PySide6.QtWidgets import QApplication, QWidget, QLabel, QSizePolicy, QVBoxLayout
+from PySide6.QtCore import QTimer
+from PySide6.QtGui import QImage, QPixmap
+from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QMessageBox, QSizePolicy
 
 
 class VideoWidget(QWidget):
@@ -13,16 +15,21 @@ class VideoWidget(QWidget):
         self.layout = QVBoxLayout()
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
+        self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
 
         # Initialize video capture
         self.cap = cv2.VideoCapture(0)
-        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 640)
-        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 480)
+        self.cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+        self.cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+
+        # if no camera found
+        if not self.cap.isOpened():
+            QMessageBox.critical(self, "Error", "No Camera Found")
 
         # Create timer for updating video frames
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_frame)
-        self.timer.start(1000/30)  # 30 fps
+        self.timer.start(1000 / 30)  # 30 fps
 
     def update_frame(self):
         # Read video frame from the camera

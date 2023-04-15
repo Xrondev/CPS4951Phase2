@@ -26,7 +26,7 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(1514, 1098)
-        Form.setStyleSheet(u"font: italic 16pt \"\u5f97\u610f\u9ed1\";")
+        Form.setStyleSheet(u"font: 16pt \"\u5f97\u610f\u9ed1\";")
         self.gridLayout_4 = QGridLayout(Form)
         self.gridLayout_4.setObjectName(u"gridLayout_4")
         self.gridLayout = QGridLayout()
@@ -37,12 +37,6 @@ class Ui_Form(object):
         self.verticalLayout.setObjectName(u"verticalLayout")
         self.verticalLayout_2 = QVBoxLayout()
         self.verticalLayout_2.setObjectName(u"verticalLayout_2")
-        self.line = QFrame(Form)
-        self.line.setObjectName(u"line")
-        self.line.setFrameShape(QFrame.HLine)
-        self.line.setFrameShadow(QFrame.Sunken)
-
-        self.verticalLayout_2.addWidget(self.line)
 
         self.verticalLayout_4 = QVBoxLayout()
         self.verticalLayout_4.setObjectName(u"verticalLayout_4")
