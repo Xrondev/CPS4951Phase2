@@ -1,0 +1,5 @@
+# ignore the idea files and pycharm files, cache files, and the .idea folder
+.idea
+*.iml
+*.pyc
+__pycache__
