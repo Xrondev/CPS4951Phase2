@@ -5,6 +5,8 @@ from PySide6.QtGui import QIcon
 from PySide6.QtWidgets import QMessageBox
 from PySide6.QtWidgets import QWidget, QVBoxLayout, QScrollArea, QLabel, QHBoxLayout, QSizePolicy, QSpacerItem
 
+from utils.chat_session_maintainer import ChatSessionMaintainer
+
 dirname = os.path.dirname(__file__)
 
 
@@ -29,6 +31,9 @@ class ConversationWidget(QWidget):
             'gpt': QIcon(os.path.join(dirname, 'robot.png')),
             'user': QIcon(os.path.join(dirname, 'account-edit.png'))
         }
+
+        # Create chat session maintainer
+        self.csm = ChatSessionMaintainer()
 
     def add_message(self, sender, message):
 
@@ -77,6 +82,9 @@ class ConversationWidget(QWidget):
         elif sender == 'user':
             self.scroll_layout.addWidget(message_widget, 0, Qt.AlignmentFlag.AlignRight)
 
+        # Add message content to the chat session maintainer
+        self.csm.add_message(message)
+
         # Scroll to bottom
         QTimer.singleShot(10, lambda: self.scroll_area.verticalScrollBar().setValue(
             self.scroll_area.verticalScrollBar().maximum()))
@@ -86,3 +94,5 @@ class ConversationWidget(QWidget):
         # Remove all messages from the scroll layout
         for i in reversed(range(self.scroll_layout.count())):
             self.scroll_layout.itemAt(i).widget().setParent(None)
+
+        self.csm.clear()
