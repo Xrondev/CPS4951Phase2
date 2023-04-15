@@ -1,14 +1,15 @@
-from PySide6.QtWidgets import QMainWindow, QApplication, QSizePolicy
+from PySide6.QtWidgets import QMainWindow, QApplication, QSizePolicy, QWidget, QGridLayout
 from qt_material import apply_stylesheet
-
 from ui.dynamic_conversation import ConversationWidget
 from ui.main_window import Ui_Form
+from ui.video_capture import VideoWidget
 
 
-class MainWindow(QMainWindow, Ui_Form):
+class MainWindow(QWidget, Ui_Form):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
         self.conversation_widget = ConversationWidget()
         self.conversation_widget.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         # test: draw a border around the conversation widget
@@ -23,12 +24,16 @@ class MainWindow(QMainWindow, Ui_Form):
         text = self.textEdit.toPlainText()
         # clear the text
         self.textEdit.clear()
-        self.conversation_widget.add_message("user", text)
+        test = ['gpt', 'user']
+        import random
+        self.conversation_widget.add_message(random.choice(test), text)
+
+
 
 
 if __name__ == "__main__":
     app = QApplication()
     window = MainWindow()
-    apply_stylesheet(app, theme='light_blue.xml')
+    apply_stylesheet(app, theme='dark_blue.xml')
     window.show()
     app.exec()
