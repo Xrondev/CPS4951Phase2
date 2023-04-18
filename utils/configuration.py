@@ -2,8 +2,8 @@ import configparser
 import os
 from os.path import isfile
 
-dirname = os.path.dirname(__file__)
-
+# main directory name
+dirname = os.path.dirname(os.path.dirname(__file__))
 
 class Configuration:
     def __init__(self):
@@ -27,8 +27,7 @@ class Configuration:
 
     def create_default_config(self):
         self.config['User'] = {
-            'api_key': 'Example, should be read from config',
-            'model': 'gpt-3.5-turbo'
+
         }
         with open(self.config_file, 'w') as configfile:
             self.config.write(configfile)
