@@ -1,9 +1,9 @@
-import sys
-
 import cv2
+import numpy
 from PySide6.QtCore import QTimer
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import QWidget, QLabel, QVBoxLayout, QMessageBox, QSizePolicy
+from deepface import DeepFace
 
 
 class VideoWidget(QWidget):
@@ -31,6 +31,17 @@ class VideoWidget(QWidget):
         self.timer.timeout.connect(self.update_frame)
         self.timer.start(1000 / 30)  # 30 fps
 
+        self.result_buffer = []
+        self.result = {
+            'angry': 0,
+            'disgust': 0,
+            'fear': 0,
+            'happy': 0,
+            'sad': 0,
+            'surprise': 0,
+            'neutral': 0
+        }
+
     def update_frame(self):
         # Read video frame from the camera
         ret, frame = self.cap.read()
@@ -46,6 +57,25 @@ class VideoWidget(QWidget):
         # Update the label with the new image
         self.label.setPixmap(QPixmap.fromImage(q_image))
         self.label.setScaledContents(True)
+        try:
+            res = DeepFace.analyze(numpy.array(frame), actions=['emotion'], silent=True, detector_backend='ssd')
+            self.update_result(res[0]['emotion'])
+        except ValueError as e:
+            print(e)
+        except Exception as e:
+            print(e)
+
+    def update_result(self, emotion):
+        self.result_buffer.append(emotion)
+        # Buffer size is 15
+        if len(self.result_buffer) > 15:
+            self.result_buffer.pop(0)
+        for k in self.result.keys():
+            for item in self.result_buffer:
+                self.result[k] += item[k]
+            self.result[k] /= len(self.result_buffer)
+            self.result[k] = int(self.result[k])
+        print(self.result)
 
     def closeEvent(self, event):
         # Release video capture when the widget is closed

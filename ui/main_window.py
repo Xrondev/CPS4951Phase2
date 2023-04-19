@@ -8,18 +8,13 @@
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
-from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
-    QMetaObject, QObject, QPoint, QRect,
-    QSize, QTime, QUrl, Qt)
-from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
-    QFont, QFontDatabase, QGradient, QIcon,
-    QImage, QKeySequence, QLinearGradient, QPainter,
-    QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFrame, QGridLayout, QHBoxLayout,
-    QLabel, QProgressBar, QPushButton, QSizePolicy,
-    QTextEdit, QVBoxLayout, QWidget)
+from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, QTimer)
+from PySide6.QtWidgets import (QFrame, QGridLayout, QHBoxLayout,
+                               QLabel, QProgressBar, QPushButton, QSizePolicy,
+                               QTextEdit, QVBoxLayout)
 
 from ui.video_capture import VideoWidget
+
 
 class Ui_Form(object):
     def setupUi(self, Form):
@@ -56,6 +51,10 @@ class Ui_Form(object):
         self.label.setObjectName(u"label")
         self.label.setMinimumSize(QSize(0, 200))
 
+        self.timer = QTimer(self.verticalLayout_2)
+        self.timer.timeout.connect(self.update_result)
+        self.timer.start(1000 / 30)
+
         self.verticalLayout_2.addWidget(self.label)
 
         self.pushButton_3 = QPushButton(Form)
@@ -69,9 +68,7 @@ class Ui_Form(object):
 
         self.verticalLayout.addLayout(self.verticalLayout_2)
 
-
         self.horizontalLayout.addLayout(self.verticalLayout)
-
 
         self.gridLayout.addLayout(self.horizontalLayout, 0, 1, 1, 1)
 
@@ -124,14 +121,12 @@ class Ui_Form(object):
 
         self.gridLayout_3.addWidget(self.pushButton_2, 1, 1, 1, 1)
 
-
         self.verticalLayout_3.addLayout(self.gridLayout_3)
 
         self.verticalLayout_3.setStretch(0, 3)
         self.verticalLayout_3.setStretch(2, 1)
 
         self.horizontalLayout_2.addLayout(self.verticalLayout_3)
-
 
         self.gridLayout.addLayout(self.horizontalLayout_2, 0, 3, 1, 1)
 
@@ -147,17 +142,25 @@ class Ui_Form(object):
 
         self.gridLayout_4.addLayout(self.gridLayout, 0, 0, 1, 1)
 
-
         self.retranslateUi(Form)
 
         QMetaObject.connectSlotsByName(Form)
+
     # setupUi
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.label.setText(QCoreApplication.translate("Form", u"<html><head/><body><p align=\"center\">Result Here</p></body></html>", None))
+        self.label.setText(
+            QCoreApplication.translate("Form", u"<html><head/><body><p align=\"center\">Result Here</p></body></html>",
+                                       None))
         self.pushButton_3.setText(QCoreApplication.translate("Form", u"Start", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"Reset Conversation", None))
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"Send", None))
+
     # retranslateUi
 
+    def update_result(self):
+        result = self.videoWidget.result
+        self.label.setText(
+            QCoreApplication.translate("Form", f"<html><head/><body><p align=\"center\">{result}</p></body></html>",
+                                       None))

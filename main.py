@@ -19,6 +19,8 @@ class MainWindow(QWidget, Ui_Form):
         self.pushButton_2.clicked.connect(self.add_conversation)
         self.pushButton.clicked.connect(self.conversation_widget.clear_conversation)
 
+
+
     def add_conversation(self):
         # get the text
         text = self.textEdit.toPlainText()
@@ -27,8 +29,6 @@ class MainWindow(QWidget, Ui_Form):
         test = ['gpt', 'user']
         import random
         self.conversation_widget.add_message(random.choice(test), text)
-
-
 
 
 if __name__ == "__main__":
