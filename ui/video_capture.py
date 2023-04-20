@@ -61,7 +61,8 @@ class VideoWidget(QWidget):
             res = DeepFace.analyze(numpy.array(frame), actions=['emotion'], silent=True, detector_backend='ssd')
             self.update_result(res[0]['emotion'])
         except ValueError as e:
-            print(e)
+            # Face not found
+            pass
         except Exception as e:
             print(e)
 
@@ -75,7 +76,7 @@ class VideoWidget(QWidget):
                 self.result[k] += item[k]
             self.result[k] /= len(self.result_buffer)
             self.result[k] = int(self.result[k])
-        print(self.result)
+        # print(self.result)
 
     def closeEvent(self, event):
         # Release video capture when the widget is closed

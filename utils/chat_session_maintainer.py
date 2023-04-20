@@ -1,5 +1,4 @@
 import openai
-
 from utils.configuration import Configuration
 
 config = Configuration()
@@ -9,27 +8,31 @@ class ChatSessionMaintainer:
     def __init__(self):
         openai.proxy = config.get('App', 'proxy')
         openai.api_key = config.get('User', 'api_key')
-        self.messages_history = [{
-            "role": "system",
-            "content": "This is a sample default invisible prompt indicating the GPT's behavior"
-        }]
+        self.messages_history = []
 
-    def chat(self, message):
+    def chat(self, message, emotion_dict: dict):
+        if len(self.messages_history) == 0:
+            # System prompt for ChatGPT
+            self.messages_history.append({
+                "role": "system",
+                "content": f'{config.get("User", "prompt")} \n Given the emotion: {str(emotion_dict)}'
+            })
+
         try:
             self.messages_history.append({
                 "role": "user",
                 "content": message
             })
+
             completion = openai.ChatCompletion.create(
-                model=config.get('App', 'model'),  # Maybe should be read from config
+                model=config.get('App', 'model'),
                 messages=self.messages_history,
             )
-            # Append the response to the history [CRITICAL]
+
             self.messages_history.append({
                 "role": "assistant",
                 "content": completion.choices[0].message.content
             })
-            # TODO: Test with a valid api key, and there are few other params can be set (if needed)
 
             return completion.choices[0].message.content
         except openai.error.AuthenticationError:
@@ -38,16 +41,7 @@ class ChatSessionMaintainer:
             return "Exceeded current quota, check plan and billing details"
 
     def clear(self):
-        self.messages_history = [{
-            "role": "system",
-            "content": "This is a sample default invisible prompt indicating the GPT's behavior"
-        }]
+        self.messages_history = []
 
     def print_session(self):
         return self.messages_history
-
-
-if __name__ == '__main__':
-    csm = ChatSessionMaintainer()
-    print(csm.chat('Hello'))
-    print(csm.print_session())

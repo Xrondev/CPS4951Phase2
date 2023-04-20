@@ -83,7 +83,7 @@ class ConversationWidget(QWidget):
             self.scroll_layout.addWidget(message_widget, 0, Qt.AlignmentFlag.AlignRight)
 
         # Add message content to the chat session maintainer
-        self.csm.add_message(message)
+        # self.csm.add_message(message)
 
         # Scroll to bottom
         QTimer.singleShot(10, lambda: self.scroll_area.verticalScrollBar().setValue(
