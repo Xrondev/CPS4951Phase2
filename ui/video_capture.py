@@ -29,7 +29,7 @@ class VideoWidget(QWidget):
         # Create timer for updating video frames
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_frame)
-        self.timer.start(1000 / 30)  # 30 fps
+        self.timer.start(1000 / 60)  # 30 fps
 
         self.result_buffer = []
         self.result = {
@@ -69,7 +69,7 @@ class VideoWidget(QWidget):
     def update_result(self, emotion):
         self.result_buffer.append(emotion)
         # Buffer size is 15
-        if len(self.result_buffer) > 15:
+        if len(self.result_buffer) > 30:
             self.result_buffer.pop(0)
         for k in self.result.keys():
             for item in self.result_buffer:
