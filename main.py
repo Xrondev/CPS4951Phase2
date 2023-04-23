@@ -1,18 +1,23 @@
 import threading
-import time
 from functools import partial
 
 from PySide6 import QtCore
-from PySide6.QtWidgets import QMainWindow, QApplication, QSizePolicy, QWidget, QGridLayout
+from PySide6.QtWidgets import QApplication, QSizePolicy, QWidget
 from qt_material import apply_stylesheet
+
 from ui.dynamic_conversation import ConversationWidget
 from ui.main_window import Ui_Form
+from ui.settings_window import SettingsWindow
 from utils.chat_session_maintainer import ChatSessionMaintainer
 
 
 class MainWindow(QWidget, Ui_Form):
+    # Define a custom signal to update the conversation widget from another thread
+    update_conversation_widget_signal = QtCore.Signal(str)
+
     def __init__(self):
         super().__init__()
+        self.setting_window = SettingsWindow()
         self.setupUi(self)
         self.csm = ChatSessionMaintainer()
 
@@ -24,6 +29,7 @@ class MainWindow(QWidget, Ui_Form):
 
         self.pushButton_2.clicked.connect(self.add_conversation)
         self.pushButton.clicked.connect(self.conversation_widget.clear_conversation)
+        self.pushButton_3.clicked.connect(self.open_settings_window)
 
     def add_conversation(self):
         # get the text
@@ -46,14 +52,14 @@ class MainWindow(QWidget, Ui_Form):
     def update_conversation_widget(self, response):
         self.conversation_widget.add_message('gpt', response)
 
-    # Define a custom signal to update the conversation widget from another thread
-    update_conversation_widget_signal = QtCore.Signal(str)
+    def open_settings_window(self):
+        self.setting_window.show()
 
 
 if __name__ == "__main__":
     app = QApplication()
     window = MainWindow()
-    apply_stylesheet(app, theme='dark_blue.xml')
+    apply_stylesheet(app, theme='light_blue.xml')
     window.update_conversation_widget_signal.connect(window.update_conversation_widget)
     window.show()
     app.exec()

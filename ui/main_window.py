@@ -95,16 +95,16 @@ class Ui_Form(object):
 
         self.gridLayout_3.addWidget(self.pushButton, 1, 0, 1, 1)
 
-        self.progressBar = QProgressBar(Form)
-        self.progressBar.setObjectName(u"progressBar")
-        sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.progressBar.sizePolicy().hasHeightForWidth())
-        self.progressBar.setSizePolicy(sizePolicy)
-        self.progressBar.setValue(0)
-
-        self.gridLayout_3.addWidget(self.progressBar, 2, 0, 1, 2)
+        # self.progressBar = QProgressBar(Form)
+        # self.progressBar.setObjectName(u"progressBar")
+        # sizePolicy = QSizePolicy(QSizePolicy.Preferred, QSizePolicy.Fixed)
+        # sizePolicy.setHorizontalStretch(0)
+        # sizePolicy.setVerticalStretch(0)
+        # sizePolicy.setHeightForWidth(self.progressBar.sizePolicy().hasHeightForWidth())
+        # self.progressBar.setSizePolicy(sizePolicy)
+        # self.progressBar.setValue(0)
+        #
+        # self.gridLayout_3.addWidget(self.progressBar, 2, 0, 1, 2)
 
         self.textEdit = QTextEdit(Form)
         self.textEdit.setObjectName(u"textEdit")
@@ -149,11 +149,11 @@ class Ui_Form(object):
     # setupUi
 
     def retranslateUi(self, Form):
-        Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
+        Form.setWindowTitle(QCoreApplication.translate("Form", u"FER Chatting!", None))
         self.label.setText(
             QCoreApplication.translate("Form", u"<html><head/><body><p align=\"center\">Result Here</p></body></html>",
                                        None))
-        self.pushButton_3.setText(QCoreApplication.translate("Form", u"Start", None))
+        self.pushButton_3.setText(QCoreApplication.translate("Form", u"Settings", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"Reset Conversation", None))
         self.pushButton_2.setText(QCoreApplication.translate("Form", u"Send", None))
 

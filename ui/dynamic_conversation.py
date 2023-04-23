@@ -28,8 +28,8 @@ class ConversationWidget(QWidget):
 
         # Create sender icons
         self.sender_icons = {
-            'gpt': QIcon(os.path.join(dirname, 'robot.png')),
-            'user': QIcon(os.path.join(dirname, 'account-edit.png'))
+            'gpt': QIcon(os.path.join(dirname, 'icon/robot.png')),
+            'user': QIcon(os.path.join(dirname, 'icon/account-edit.png'))
         }
 
         # Create chat session maintainer
