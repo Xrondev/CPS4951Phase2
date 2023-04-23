@@ -10,7 +10,7 @@
 
 from PySide6.QtCore import (QCoreApplication, QMetaObject, QSize, QTimer)
 from PySide6.QtWidgets import (QFrame, QGridLayout, QHBoxLayout,
-                               QLabel, QProgressBar, QPushButton, QSizePolicy,
+                               QLabel, QPushButton, QSizePolicy,
                                QTextEdit, QVBoxLayout)
 
 from ui.video_capture import VideoWidget

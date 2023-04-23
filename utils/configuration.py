@@ -5,6 +5,7 @@ from os.path import isfile
 # main directory name
 dirname = os.path.dirname(os.path.dirname(__file__))
 
+
 class Configuration:
     def __init__(self):
         if isfile(os.path.join(dirname, 'config.ini')):
