@@ -1,9 +1,13 @@
+"""
+Dynamically display the conversation between the user and the chat model from OpenAI
+"""
 import os
 
-from PySide6.QtCore import QSize, Qt, QTimer
+from PySide6.QtCore import QSize, QTimer, Qt
 from PySide6.QtGui import QIcon
+from PySide6.QtWidgets import QHBoxLayout, QLabel, QScrollArea, QSizePolicy, QSpacerItem, \
+    QVBoxLayout, QWidget
 from PySide6.QtWidgets import QMessageBox
-from PySide6.QtWidgets import QWidget, QVBoxLayout, QScrollArea, QLabel, QHBoxLayout, QSizePolicy, QSpacerItem
 
 from utils.chat_session_maintainer import ChatSessionMaintainer
 
@@ -11,6 +15,11 @@ dirname = os.path.dirname(__file__)
 
 
 class ConversationWidget(QWidget):
+    """
+    This widget is used to display the conversation between the user and the GPT-3 model.
+    It is on the right side of the main window.
+    """
+
     def __init__(self):
         super().__init__()
 
@@ -35,7 +44,14 @@ class ConversationWidget(QWidget):
         # Create chat session maintainer
         self.csm = ChatSessionMaintainer()
 
-    def add_message(self, sender, message):
+    def add_message(self, sender, message) -> None:
+        """
+        Add a message to the conversation widget
+        :param sender: 'gpt' or 'user'
+        :param message: The message to be displayed, if the message is empty,
+        a popup dialog box will be created
+        :return: None
+        """
 
         if message == '':
             # create a popup dialog box to tell the user that the message is empty
@@ -89,7 +105,11 @@ class ConversationWidget(QWidget):
         QTimer.singleShot(10, lambda: self.scroll_area.verticalScrollBar().setValue(
             self.scroll_area.verticalScrollBar().maximum()))
 
-    def clear_conversation(self):
+    def clear_conversation(self) -> None:
+        """
+        clear the display of the conversation. This will also clear the chat session maintainer.
+        :return: None
+        """
         print('clearing conversation')
         # Remove all messages from the scroll layout
         for i in reversed(range(self.scroll_layout.count())):
