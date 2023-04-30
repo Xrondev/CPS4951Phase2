@@ -13,6 +13,7 @@ from PySide6.QtWidgets import (QFrame, QGridLayout, QHBoxLayout,
                                QLabel, QPushButton, QSizePolicy,
                                QTextEdit, QVBoxLayout)
 
+from ui.graphical_result import GraphicalResult
 from ui.video_capture import VideoWidget
 
 
@@ -20,7 +21,6 @@ class UiForm:
     def setupUi(self, form):
         if not form.objectName():
             form.setObjectName("Form")
-        form.resize(1514, 1098)
         form.setStyleSheet("font: 16pt \"\u5f97\u610f\u9ed1\";")
         self.gridLayout_4 = QGridLayout(form)
         self.gridLayout_4.setObjectName("gridLayout_4")
@@ -47,9 +47,12 @@ class UiForm:
 
         self.verticalLayout_2.addWidget(self.line_2)
 
+        self.graphical_result = GraphicalResult()
+        self.verticalLayout_2.addWidget(self.graphical_result)
+
         self.label = QLabel(form)
         self.label.setObjectName("label")
-        self.label.setMinimumSize(QSize(0, 200))
+        self.label.setMinimumSize(QSize(0, 100))
 
         self.timer = QTimer(self.verticalLayout_2)
         self.timer.timeout.connect(self.update_result)
@@ -145,6 +148,7 @@ class UiForm:
         self.retranslateUi(form)
 
         QMetaObject.connectSlotsByName(form)
+        form.resize(1530, 900)
 
     # setupUi
 
@@ -162,7 +166,14 @@ class UiForm:
     # retranslateUi
 
     def update_result(self):
+        """
+        Update result label and the graphical result
+        """
         result = self.videoWidget.result
+        self.graphical_result.emotions = result
+        result = str(result)
+        import re
+        result = re.sub(r"[{}']", '', result)
         self.label.setText(
             QCoreApplication.translate("Form",
                                        f"<html><head/><body><p align=\"center\">"

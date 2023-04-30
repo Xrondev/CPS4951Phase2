@@ -21,6 +21,7 @@ class VideoWidget(QWidget):
         # Initialize UI elements
         self.label = QLabel(self)
         self.layout = QVBoxLayout()
+        self.setMinimumSize(640, 480)
         self.layout.addWidget(self.label)
         self.setLayout(self.layout)
         self.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Ignored)
@@ -37,7 +38,7 @@ class VideoWidget(QWidget):
         # Create timer for updating video frames
         self.timer = QTimer(self)
         self.timer.timeout.connect(self.update_frame)
-        self.timer.start(1000 / 60)  # 30 fps
+        self.timer.start(1000 / 30)
 
         self.result_buffer = []
         self.result = {
