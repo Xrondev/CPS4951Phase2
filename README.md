@@ -3,8 +3,7 @@
 ## Description 
 
 This is a simple application integrated a emotion recognition system with the OpenAI ChatGPT utility. The application will provide chat and suggestions according to the user's emotion recognition result in real time.  
-The application created a simple graphical user interface for users and integrated the emotion recognition and the OpenAI APIs.  
-The code was linted with PyLint to provide more readable and comprehensive codes.
+A project of WKU CPS4951. code was linted with PyLint to provide more readable and comprehensive codes.
 
 ## Installation 
 
