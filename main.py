@@ -33,6 +33,7 @@ class MainWindow(QWidget, UiForm):
         self.gridLayout_2.addWidget(self.conversation_widget)
 
         self.pushButton_2.clicked.connect(self.add_conversation)
+        self.textEdit.returnPressed.connect(self.add_conversation)
         self.pushButton.clicked.connect(self.conversation_widget.clear_conversation)
         self.pushButton_3.clicked.connect(self.open_settings_window)
 
